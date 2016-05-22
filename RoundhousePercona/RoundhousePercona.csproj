@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{FED301ED-C903-498E-8C99-71A35EB0A2BF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RoundhousePercona</RootNamespace>
+    <AssemblyName>RoundhousePercona</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="rh, Version=0.8.6.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\roundhouse.0.8.6\bin\rh.exe</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BatchFileExecutor.cs" />
+    <Compile Include="MySqlDatabaseWithOnlineSchemaChange.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="percona-toolkit\percona-version-check" />
+    <None Include="percona-toolkit\pt-align" />
+    <None Include="percona-toolkit\pt-archiver" />
+    <None Include="percona-toolkit\pt-config-diff" />
+    <None Include="percona-toolkit\pt-deadlock-logger" />
+    <None Include="percona-toolkit\pt-diskstats" />
+    <None Include="percona-toolkit\pt-duplicate-key-checker" />
+    <None Include="percona-toolkit\pt-fifo-split" />
+    <None Include="percona-toolkit\pt-find" />
+    <None Include="percona-toolkit\pt-fingerprint" />
+    <None Include="percona-toolkit\pt-fk-error-logger" />
+    <None Include="percona-toolkit\pt-heartbeat" />
+    <None Include="percona-toolkit\pt-index-usage" />
+    <None Include="percona-toolkit\pt-ioprofile" />
+    <None Include="percona-toolkit\pt-kill" />
+    <None Include="percona-toolkit\pt-mext" />
+    <None Include="percona-toolkit\pt-mysql-summary" />
+    <None Include="percona-toolkit\pt-online-schema-change" />
+    <None Include="percona-toolkit\pt-pmp" />
+    <None Include="percona-toolkit\pt-query-digest" />
+    <None Include="percona-toolkit\pt-show-grants" />
+    <None Include="percona-toolkit\pt-sift" />
+    <None Include="percona-toolkit\pt-slave-delay" />
+    <None Include="percona-toolkit\pt-slave-find" />
+    <None Include="percona-toolkit\pt-slave-restart" />
+    <None Include="percona-toolkit\pt-stalk" />
+    <None Include="percona-toolkit\pt-summary" />
+    <None Include="percona-toolkit\pt-table-checksum" />
+    <None Include="percona-toolkit\pt-table-sync" />
+    <None Include="percona-toolkit\pt-table-usage" />
+    <None Include="percona-toolkit\pt-upgrade" />
+    <None Include="percona-toolkit\pt-variable-advisor" />
+    <None Include="percona-toolkit\pt-visual-explain" />
+    <None Include="pt-online-schema-change.bat" />
+    <None Include="RoundhousePercona.nuspec" />
+    <None Include="_CreateNewNuGetPackage\Config.ps1" />
+    <None Include="_CreateNewNuGetPackage\DoNotModify\CreateNuGetPackage.ps1" />
+    <None Include="_CreateNewNuGetPackage\DoNotModify\New-NuGetPackage.ps1" />
+    <None Include="_CreateNewNuGetPackage\DoNotModify\UploadNuGetPackage.ps1" />
+    <None Include="_CreateNewNuGetPackage\RunMeToUploadNuGetPackage.cmd" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_CreateNewNuGetPackage\DoNotModify\NuGet.exe" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="readme.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>REM Create a NuGet package for this project and place the .nupkg file in the project's output directory.
+REM If you see this in Visual Studio's Error List window, check the Output window's Build tab for the actual error.
+ECHO Creating NuGet package in Post-Build event...
+PowerShell -NoProfile -ExecutionPolicy Bypass -Command "&amp; '$(ProjectDir)_CreateNewNuGetPackage\DoNotModify\CreateNuGetPackage.ps1' -ProjectFilePath '$(ProjectPath)' -OutputDirectory '$(TargetDir)' -BuildConfiguration '$(ConfigurationName)' -BuildPlatform '$(PlatformName)'"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

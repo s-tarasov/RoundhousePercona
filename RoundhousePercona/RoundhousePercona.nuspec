@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>RoundhousePercona</id>
+    <version>0.0.1</version>
+    <authors>starasov</authors>
+    <description>Roundhouse plugin. Use pt-online-schema-change for ALTER TABLE operations</description>
+    <projectUrl>https://github.com/s-tarasov/RoundhousePercona</projectUrl>
+    <dependencies>
+      <dependency id="roundhouse" version="0.8.6" />
+      <dependency id="StrawberryPerl64" version="5.22.2.1" />
+    </dependencies> 
+  </metadata>
+  <files>
+    <file src="pt-online-schema-change.bat" target="percona-toolkit" />
+    <file src="percona-toolkit\**" target="percona-toolkit" />
+  </files>
+</package>
