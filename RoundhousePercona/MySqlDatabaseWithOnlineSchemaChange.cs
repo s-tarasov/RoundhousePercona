@@ -268,14 +268,15 @@ namespace RoundhousePercona
             var alter_sql = sql_to_run.Substring(sql_to_run.IndexOf(words[3])).Replace(Environment.NewLine, " ");
             var toolArguments = new StringBuilder()
                 .Append(" --execute")
-                .Append(" --alter \"" + alter_sql + "\"");
-            add_command_line_arguments(toolArguments);
+                .Append(" --alter \"" + alter_sql + "\"")
+                .Append(" " + get_command_line_argument("pt-online-schema-change-options", false));
+
             add_datasource_arguments(toolArguments, table_name, connection_string);
 
             Log.bound_to(this).log_an_info_event_containing("run pt-online-schema-change with arguments:" + toolArguments);
 
             var result = BatchFileExecutor.execute_bat_file(
-                filePath: get_required_command_line_argument("pt-online-schema-change-path"),
+                filePath: get_command_line_argument("pt-online-schema-change-path", true),
                 arguments: toolArguments.ToString(),
                 onOutput: m => Log.bound_to(this).log_an_info_event_containing(m),
                 onError: m => Log.bound_to(this).log_an_error_event_containing(m)
@@ -287,15 +288,16 @@ namespace RoundhousePercona
             }
         }
 
-        private string get_required_command_line_argument(string argumentName)
+        private string get_command_line_argument(string argumentName, bool required)
         {
             var prefix = "--" + argumentName + "=";
 
             var value = Environment.GetCommandLineArgs()
                 .Where(a => a.StartsWith(prefix))
-                .Select(a => a.Substring(prefix.Length))
+                .Select(a => a.Substring(prefix.Length).Trim('\"'))
                 .FirstOrDefault();
-            if (string.IsNullOrEmpty(value)) {
+            
+            if (required && string.IsNullOrEmpty(value)) {
                 throw new InvalidOperationException("Argument " + argumentName + " required");
             }
 

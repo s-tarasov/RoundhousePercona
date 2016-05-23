@@ -1,2 +1,2 @@
 ﻿usage:
-rh.exe -cs="server=127.0.0.1;database=test;uid=root;pwd=123456;" -dt=mysql --databasetype="RoundhousePercona.MySqlDatabaseWithOnlineSchemaChange, RoundhousePercona" --pt-online-schema-change-path="..\..\..\packages\RoundhousePercona.0.0.1\percona-toolkit\pt-online-schema-change.bat" --pct-recursion-method=none
+rh.exe -cs="server=127.0.0.1;database=test;uid=root;pwd=123456;" -dt=mysql --databasetype="RoundhousePercona.MySqlDatabaseWithOnlineSchemaChange, RoundhousePercona" --pt-online-schema-change-path="..\..\..\packages\RoundhousePercona.0.0.2\percona-toolkit\pt-online-schema-change.bat" --pt-online-schema-change-options="--recursion-method none"
