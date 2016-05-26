@@ -1,6 +1,6 @@
 # RoundhousePercona
 
-This repo hosts sources for the RoundhousePercona package.
+This repo hosts sources for the `RoundhousePercona` NuGet package.
 This library provides infrastructure support for using pt-online-schema-change and Roundhouse.
 * only Mysql
 * for 0 downtime database deployments and large databases
